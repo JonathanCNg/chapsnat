@@ -11,32 +11,66 @@ import CustomMultiPicker from "react-native-multiple-select-list";
 import * as React from "react";
 import { useState, useEffect } from "react";
 import Colors from "../constants/Colors";
+import db from "../firebase";
+import firebase from "firebase/app";
 
-const userListDemo = {
-  123: "Jenny",
-  124: "Ashwin",
-  125: "Pavan",
-};
-
-export default function FriendsScreen() {
+export default function FriendsScreen( {navigation} ) {
   const [chatName, setChatName] = useState("");
   const [userList, setUserList] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
 
   useEffect(() => {
     // download user list from Firebase
+    fetch('https://us-central1-chapsnat-3f4f7.cloudfunctions.net/getAllUsers')
+    .then(response => {return response.json()})
+    .then(data => {
+      delete data[firebase.auth().currentUser.uid]
+      setUserList(data)
+    }).then(() => {
+      console.log("Nice")
+    }).catch((error) => {
+      console.log("error", error)
+    })
+    
   }, []);
 
   const onPressCreateChat = () => {
     console.log("Create Chat button pressed!");
+    console.log(selectedUsers);
+    console.log(chatName);
     // Create new chat in Firebase
+    let chatsRef = db.collection("Chats");
+    chatsRef
+      .doc(chatName)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          alert("Chat with this name already exists!");
+        } else {
+          chatsRef
+            .doc(chatName)
+            .set({
+              messages: [],
+              users: [...selectedUsers, firebase.auth().currentUser.uid],
+            })
+            .then(() => {
+              console.log("Chat successfully created!");
+              setSelectedUsers([])
+              setChatName("")
+              navigation.navigate("Home");
+            })
+            .catch((error) => {
+              console.error("Error creating chat: ", error);
+            });
+        }
+      });
   };
 
   return (
     <View>
       <View style={styles.friendListContainer}>
         <CustomMultiPicker
-          options={userListDemo}
+          options={userList}
           search={true} // should show search bar?
           multiple={true} // allow multiple select
           placeholder={"Search"}
@@ -62,7 +96,11 @@ export default function FriendsScreen() {
       <KeyboardAvoidingView behavior="position">
         <View style={styles.newChatContainer}>
           <Text>New chat name:</Text>
-          <TextInput style={styles.chatNameInput} onChangeText={setChatName} />
+          <TextInput
+            style={styles.chatNameInput} 
+            onChangeText={setChatName} 
+            value={chatName}
+          />
           <Button
             onPress={onPressCreateChat}
             title="Create Chat"

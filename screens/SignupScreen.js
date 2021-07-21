@@ -1,4 +1,4 @@
-import { Text, View, TextInput, TouchableOpacity } from "react-native";
+import { Text, View, TextInput, TouchableOpacity, StyleSheet } from "react-native";
 import firebase from "@firebase/app";
 
 import React, {useState, useEffect } from "react";
@@ -29,20 +29,71 @@ export default function SignupScreen() {
   };
 
     return (
-    <View>
-      <Text>SignUp</Text>
-      <Text>Name:</Text>
-      <TextInput onChangeText={setName}/>
-      <Text>Email:</Text>
-      <TextInput onChangeText={setEmail}/>
-      <Text>Password (6+ characters):</Text>
-      <TextInput secureTextEntry={true} onChangeText={setPassword}/>
+    <View style={styles.container}>
+      <View style={styles.inputContainer}>
+        <TextInput 
+          style={styles.inputs}
+          onChangeText={setName}
+          placeholder={"Name"}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput 
+          style={styles.inputs}
+          onChangeText={setEmail}
+          placeholder={"Email"}
+        />
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput  
+          style={styles.inputs}
+          onChangeText={setPassword}
+          placeholder={"Password (6+ characters)"}
+        />
+      </View>
       <TouchableOpacity
           onPress={onPressCreate}
-          style={{backgroundColor: Colors.snapblue}}
+          style={{...styles.buttonContainer, backgroundColor: Colors.snapblue}}
         >
-          <Text accessibilityLabel={"Sign Up"}>Sign Up</Text>
+          <Text style={{fontWeight: 'bold'}} accessibilityLabel={"Sign Up"}>Sign Up</Text>
         </TouchableOpacity>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+      // justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: Colors.snapyellow,
+  },
+  inputContainer: {
+    borderBottomColor: "#F5FCFF",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 30,
+    borderBottomWidth: 1,
+    borderBottomWidth: 1,
+    width: 300,
+    height: 45,
+    marginTop: 20,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  inputs: {
+    height: 45,
+    marginLeft: 16,
+    borderBottomColor: "#FFFFFF",
+    flex: 1,
+  },
+  buttonContainer: {
+    height: 45,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 20,
+    width: 300,
+    borderRadius: 30,
+    backgroundColor: "transparent",
+  },
+});

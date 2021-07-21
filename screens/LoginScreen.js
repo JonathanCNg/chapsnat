@@ -5,6 +5,7 @@ import {
     TextInput,
     Button,
     TouchableOpacity,
+    Image,
   } from "react-native";
   
   import React, { useState } from "react";
@@ -32,6 +33,16 @@ import {
   
     return (
       <View style={styles.container}>
+        {/* <View style={{flex:1, backgroundColor: 'red'}}> */}
+          <Image
+            style={{width: 300, resizeMode: 'contain', marginBottom: 20}}
+            source={{
+              height: 253,
+              width: 280,
+              uri: 'https://p.kindpng.com/picc/s/149-1494252_transparent-cute-ghost-png-cute-ghost-clipart-png.png'}}
+          />
+
+        {/* </View> */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.inputs}

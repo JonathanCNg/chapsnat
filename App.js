@@ -8,6 +8,7 @@ import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import firebase from "@firebase/app";
+import colors, { Colors } from "./constants/Colors";
 
 const Stack = createStackNavigator();
 
@@ -33,7 +34,21 @@ useEffect(() => {
           ) : (
             <>
               <Stack.Screen name="Login" component={LoginScreen} options={{headerShown:false}}/>
-              <Stack.Screen name="Signup" component={SignupScreen} />  
+              <Stack.Screen 
+                name="Signup" 
+                component={SignupScreen} 
+                options={{
+                  headerTintColor: 'black',
+                  headerStyle: {
+                    backgroundColor: colors.snapyellow,
+                    shadowRadius: 0,
+                    shadowOffset: {
+                      height: 0,
+                    }
+                  }
+                  
+                }}
+              />  
             </> 
           )}
         </Stack.Navigator>
