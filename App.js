@@ -9,6 +9,7 @@ import SignupScreen from "./screens/SignupScreen";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import firebase from "@firebase/app";
 import colors, { Colors } from "./constants/Colors";
+import { ActionSheetProvider } from '@expo/react-native-action-sheet'
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,8 @@ useEffect(() => {
 }, []);
 
   return (
+    <ActionSheetProvider>
+
     <View style={styles.container}>
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Tabs">
@@ -48,13 +51,14 @@ useEffect(() => {
                   }
                   
                 }}
-              />  
+                />  
             </> 
           )}
         </Stack.Navigator>
         <StatusBar style="auto" />
       </NavigationContainer>
     </View>
+  </ActionSheetProvider>
   );
 }
 
