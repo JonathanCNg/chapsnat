@@ -23,11 +23,11 @@ export default function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <FlatList
         data={chatList}
-        renderItem={({ cookie }) => (
+        renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("Chat", {chatid: cookie.id})}
+            onPress={() => navigation.navigate("Chat", {chatid: item.id})}
           >
-            <Text style={styles.cookie}>{cookie.id}</Text>
+            <Text style={styles.item}>{item.id}</Text>
           </TouchableOpacity>
         )}
       />
