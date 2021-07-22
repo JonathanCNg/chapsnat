@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
 import db from "../firebase";
-import firebase from "firebase/app";
+import firebase from "@firebase/app";
 
 export default function ChatScreen({ navigation, route }) {
   const [messages, setMessages] = useState([]);
@@ -45,7 +45,7 @@ export default function ChatScreen({ navigation, route }) {
         // current "blue bubble" user
         _id: firebase.auth().currentUser.uid,
         name: firebase.auth().currentUser.displayName,
-        avatar: "https://ca.slack-edge.com/T0242N93U78-U024ZLJMTDJ-07e780348798-512",
+        avatar: firebase.auth().currentUser.photoURL,
       }}
       inverted={false}
       showUserAvatar={true}
